@@ -7,6 +7,7 @@ public class Versenykiiras {
     private Versenyzo[] versenyzok;
     private Random szam = new Random();
     private Scanner scanner = new Scanner(System.in);
+    private boolean voltGyorsitas = false; // Gyorsítás figyelése
 
     public Versenykiiras(Versenyzo[] versenyzok) {
         this.versenyzok = versenyzok;
@@ -20,6 +21,7 @@ public class Versenykiiras {
             for (int i = 0; i < versenyzok.length; i++) {
                 if (szam.nextInt(5) == 0) {
                     versenyzok[i].gyorsit();
+                    voltGyorsitas = true;
                     System.out.println(versenyzok[i].getSzin() + " gyorsítót kaptott...");
                 } else {
                     versenyzok[i].lep();
@@ -32,27 +34,27 @@ public class Versenykiiras {
         }
 
         Versenyzo gyoztes = gyoztesKivalaszt();
-        System.out.println("A nyertes: " + gyoztes.getSzin() + "!");
-        if (gyoztes.getSzin().equalsIgnoreCase(tipp)) {
-            System.out.println("A tipped helyes volt");
+        if (!voltGyorsitas && "döntetlen".equalsIgnoreCase(tipp)) {
+            System.out.println("A verseny döntetlen lett, helyesen tippeltél!");
+        } else if (gyoztes.getSzin().equalsIgnoreCase(tipp)) {
+            System.out.println("A nyertes: " + gyoztes.getSzin() + "! A tipped helyes volt.");
         } else {
-            System.out.println("Nem tippeltél helyesen.");
-            // az a gond, hogy a döntetlennél matematikailag bármely tipp helyes. Ezt kezelni kell!
+            System.out.println("Nem tippeltél helyesen. A győztes: " + gyoztes.getSzin());
         }
         scanner.close();
     }
 
-    private String tippEllenorzes() { //metódus az ellenőrzéshez
-        System.out.println("Tippelj, melyik csiga lesz a győztes! (piros, zöld, kék):");
+    private String tippEllenorzes() {
+        System.out.println("Tippelj, melyik csiga lesz a győztes (piros, zöld, kék, döntetlen):");
         String tipp = scanner.nextLine().trim();
-        while (!ervenyesSzin(tipp)) {
-            System.out.println("Csak a következők adhatók meg: (piros, zöld, kék):");
+        while (!isValidColor(tipp) && !"döntetlen".equals(tipp)) {
+            System.out.println("Érvénytelen tipp! Próbáld újra! (piros, zöld, kék, döntetlen):");
             tipp = scanner.nextLine().trim();
         }
         return tipp;
     }
 
-    private boolean ervenyesSzin(String szin) {
+    private boolean isValidColor(String szin) {
         for (Versenyzo versenyzo : versenyzok) {
             if (versenyzo.getSzin().equalsIgnoreCase(szin)) {
                 return true;
