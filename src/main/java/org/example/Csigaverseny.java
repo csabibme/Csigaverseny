@@ -9,5 +9,6 @@ public class Csigaverseny {
         };
         Versenykiiras versenykiiras = new Versenykiiras(versenyzok);
         versenykiiras.versenyIndit();
+
     }
 }
