@@ -1,7 +1,13 @@
 package org.example;
 
-public class Main {
+public class Csigaverseny {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Versenyzo[] versenyzok = {
+                new Csiga("piros"),
+                new Csiga("zöld"),
+                new Csiga("kék")
+        };
+        Versenykiiras versenykiiras = new Versenykiiras(versenyzok);
+        versenykiiras.versenyIndit();
     }
 }
