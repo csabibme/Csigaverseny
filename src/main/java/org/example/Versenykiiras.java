@@ -47,14 +47,14 @@ public class Versenykiiras {
     private String tippEllenorzes() {
         System.out.println("Tippelj, melyik csiga lesz a győztes (piros, zöld, kék, döntetlen):");
         String tipp = scanner.nextLine().trim();
-        while (!isValidColor(tipp) && !"döntetlen".equals(tipp)) {
+        while (!ervenyesSzin(tipp) && !"döntetlen".equals(tipp)) {
             System.out.println("Érvénytelen tipp! Próbáld újra! (piros, zöld, kék, döntetlen):");
             tipp = scanner.nextLine().trim();
         }
         return tipp;
     }
 
-    private boolean isValidColor(String szin) {
+    private boolean ervenyesSzin(String szin) {
         for (Versenyzo versenyzo : versenyzok) {
             if (versenyzo.getSzin().equalsIgnoreCase(szin)) {
                 return true;
